@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="template" xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5>
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Professeurs</title>
+</head>
+<body>
+<div layout:fragment ="Mycontent">
+<div class="container mt-5">
+<div class="card">
+ <div class="card-header">
+ Liste des Professeurs
+</div>
+ <div class="card-body">
+ <table class="table table-striped">
+ <tr>
+ <th>ID</th><th>Nom Professeur</th><th>date de naiisance</th><th>Diplome</th><th>matiere</th>
+ <th>grade</th> <th sec:authorize="hasRole('admin')" >Modifier</th><th sec:authorize="hasRole('admin')" >Supprimer</th>
+ </tr> 
+ <tr th:each="p:${Professeurs}">
+ <td th:text="${p.idProf}"></td>
+ <td th:text="${p.nomProf}"></td>
+ <td th:text="${p.dateDeNaissance}"></td> 
+ <td th:text="${p.diplome}"></td> 
+ <td th:text="${p.matiere}"></td> 
+ <td th:text="${p.grade.nomGrade}"></td>  
+ <td ><a class="btn btn-danger" sec:authorize="hasRole('admin')" onclick="return confirm('Etes-vous sûr ?')" th:href="@{supprimerProf(id=${p.idProf}, page=${currentPage},size=${size})}">Supprimer</a>
+<td ><a class="btn btn-success" sec:authorize="hasRole('admin')" th:href="@{modifierProf(id=${p.idProf})}">Editer</a></td>
+</tr> 
+</table>
+ </div>
+</div>
+</div>
+</div>
+</body>
+</html>
